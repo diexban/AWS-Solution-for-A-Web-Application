@@ -120,11 +120,11 @@ While CloudFront provides significant performance and security benefits by cachi
 This trade-off is suitable for applications where latency and geographic distribution of users are not critical factors.
 
 ## Task #2
-For task number two I could convert my structure into terraform code and store it in a github repository, I could create a variables.tf file with environment-specific and client specific .tfvars files so we can use resuse the main.tf file in different situations this would solve any reusability issues that would arrise, I would also structure my project with modules to avoid any unesecary duplication.
+For task number two, I could convert my structure into Terraform code and store it in a GitHub repository. I could create a variables.tf file with environment-specific and client-specific .tfvars files so we can reuse the main.tf file in different situations. This would solve any reusability issues that might arise. I would also structure my project with modules to avoid any unnecessary duplication.
 
 ## Infrastructure as Code with Terraform
 
-The following are two snippets of how with reacher I would approch the first steps of the turning the design into IaC
+The following are two snippets of how I would approach the first steps of turning the design into IaC.
 
 variables.tf
 ```hcl
@@ -208,4 +208,4 @@ resource "aws_ecs_task_definition" "app_task" {
     }
   ])
 }
-
+```
