@@ -87,7 +87,7 @@ adapt to varying traffic loads.
 
 While I can't provide precise figures without knowing the exact traffic patterns, I would implement the following scaling policies to keep costs under control:
 
-- Target Tracking Scaling: This policy will automatically adjust the number of tasks for computing instances (Fargate) based on usage. By scaling the application dynamically according to traffic, we avoid over-provisioning, which helps keep costs low.
+- Target Tracking Scaling: This policy will automatically adjust the number of tasks for computing instances based on usage. By scaling the application dynamically according to traffic, we avoid over-provisioning, which helps keep costs low.
 
 - Log Retention Policy in CloudWatch: To further reduce costs, I would apply a short log retention policy in CloudWatch. Logs would be transferred to S3 with its own retention policy, ensuring that unnecessary data is not stored for long periods, reducing storage costs.
 
