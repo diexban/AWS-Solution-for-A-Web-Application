@@ -103,5 +103,20 @@ While I can't really provide precise cost without knowing the exact traffic patt
 
 ## Explanation and Components Used in Solution #2
 
-For my second solution I followed a more traditional 3 tier arquiteqtual design using EC2 instances, rather than pointing out all the components I'll point out what is different
-I exchanged fargate for EC2 servers in case the application needs them they are placed inside a auto scaling group to 
+Switched from Fargate to EC2 Instances
+
+For my second solution, I implemented a more traditional 3-tier architecture using EC2 instances as the core compute layer. Rather than detailing all the components in the design, I'll focus on the key differences compared to the original setup:
+
+- Instead of using AWS Fargate to run the application, I opted for EC2 instances.
+These instances are placed inside an Auto Scaling Group (ASG) to ensure scalability. The ASG automatically adjusts the number of instances based on traffic or application demands, adding new instances during peak times and reducing them during low-traffic periods.
+This approach gives greater control over the compute layer, especially if the application requires custom configurations or additional resources that are easier to manage with EC2 instances.
+Replaced RDS with AuroraDB
+
+- To streamline database management and benefit from automatic scaling, I replaced the Amazon RDS instance with Amazon Aurora.
+Aurora provides advanced features such as automatic replication, high availability, and dynamic scaling, which can handle varying workloads more efficiently than traditional RDS.
+This change not only simplifies database maintenance but also reduces costs by scaling storage and compute independently as needed.
+Removed CloudFront for Cost Optimization
+
+ - To reduce costs, I removed Amazon CloudFront as a content distribution layer.
+While CloudFront provides significant performance and security benefits by caching content at edge locations, the architecture now routes requests directly to the load balancer. This approach simplifies the architecture and avoids the additional costs associated with maintaining a CDN.
+This trade-off is suitable for applications where latency and geographic distribution of users are not critical factors.
