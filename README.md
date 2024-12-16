@@ -71,9 +71,9 @@ In terms of monitoring, I configured CloudWatch to monitor the health of each co
 availability?
 - A key point in my first solution that contributes to cost-effectiveness is the use of Fargate. As a managed service, Fargate automatically scales based on demand, ensuring that the system performs well under varying loads without the need to over-provision resources. This approach is more cost-effective than using EC2 instances, where over-provisioning could lead to unnecessary expenses.
 
-- Another important decision was to use RDS with synchronous replication. While having a replica in a second availability zone is cheaper than using two separate RDS instances for high availability, opting for a single RDS instance without a replica could save costs further. However, this would compromise high availability and fault tolerance. The additional cost of a replica is justified to reduce the risk of downtime, which could lead to greater losses.
+- Another important decision I made was to use RDS with synchronous replication. While having a replica in a second availability zone is cheaper than using two separate RDS instances for high availability, opting for a single RDS instance without a replica could save costs further. However, this would compromise high availability and fault tolerance. The additional cost of a replica I believe is justified to reduce the risk of downtime, which could lead to greater losses.
 
-- While using CloudFront adds some cost, it provides significant performance benefits by reducing strain on the web layer. With caching in place, the web layer does not need to scale as frequently, keeping costs lower overall. Similarly, using Redis adds costs for the caching layer but significantly reduces load on the database, helping maintain performance at scale.
+- Lastly while using CloudFront adds some cost, it provides significant performance benefits by reducing strain on the web layer. With caching in place, the web layer does not need to scale as frequently, keeping costs lower overall. Similarly, using Redis adds costs for the caching layer but significantly reduces load on the database, helping maintain performance at scale.
 
 ■ What trade-offs, if any, did you make between cost and
 performance?
