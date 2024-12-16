@@ -2,7 +2,7 @@
 
 ## Infrastructure Design Proposal for AWS Web Application Hosting
 
-As part of the infrastructure design for the new web application, I am proposing **two solutions** for hosting the application on AWS. Since it is not yet confirmed whether the application will be built using container images, the two solutions address both possibilities:
+As part of the infrastructure design for this new web application, I am proposing **two solutions** for hosting the application on AWS. Since I don't know whether the application will be built using container images, the two solutions address both possibilities:
 
 1. **Using AWS Fargate**  
    _(For container-based workloads)_  
@@ -16,13 +16,13 @@ As part of the infrastructure design for the new web application, I am proposing
 
 ## Explanation and Components Used in the Architecture Diagram
 
-For my first solution, I decided to create a VPC within a region and distribute components across two Availability Zones to ensure high availability and fault tolerance. I envisioned the services being built with a containerization mindset, so I created two ECS clusters: one for the web layer and one for the application layer.
+For my first solution, I decided to create a VPC within a region and distribute components across two Availability Zones to ensure high availability and fault tolerance. I envisioned the services being built with a containerization mindset so they are provided as images, so I created two ECS clusters: one for the web layer and one for the application layer.
 
-In each Availability Zone, I deployed Fargate instances running both front-end and back-end services using images pulled from Amazon ECR. These instances are separated into their own clusters and subnets to ensure they have the necessary resources and network ranges to scale based on traffic and computing load.
+In each Availability Zone, I deployed Fargate instances running both front-end and back-end services using images pulled from what the developers push to Amazon ECR. These instances are separated into their own clusters and subnets to ensure they have the necessary resources and network ranges to scale based on traffic and computing load.
 
-To handle load distribution between the web and app layers, I set up an internal load balancer that balances traffic between the web layer (in ECS) and the app layer. Each Fargate instance is placed inside its own security group, allowing communication only between layers and the necessary services. This separation minimizes the risk of security breaches.
+To handle load distribution between the web and app layers, I set up an internal load balancer that balances traffic between the web layer and the app layer. Each Fargate instance is placed inside its own security group, allowing communication only between layers and the necessary services. This separation minimizes the risk of security breaches.
 
-For the database layer, I have set up an RDS instance with synchronous replication in the second Availability Zone, which ensures failover capabilities in case of an issue. This database is also placed inside its own security group for added security. I opted for a single RDS instance, as it has sufficient capacity to scale on its own. Additionally, I added an ElastiCache Redis node to offload some of the load from the database using caching.
+For the database layer, I have set up an RDS instance with synchronous replication in the second Availability Zone, which ensures failover capabilities in case of an issue. This database is also placed inside its own security group for added security. I opted for a single RDS instance, as it has sufficient capacity to scale on its own. Additionally, I added two ElastiCache Redis node to offload some of the load from the database using caching. These nodes have a separate Security Group as well
 
 For content distribution, I use CloudFront to accelerate delivery and cache static content. CloudFront is connected to an Application Load Balancer in a public subnet of my VPC, which balances traffic to the web layer. For storage, I leverage S3 to serve static content, store backups, and store logs.
 
