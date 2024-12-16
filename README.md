@@ -211,7 +211,7 @@ resource "aws_ecs_task_definition" "app_task" {
 ```
 For the pipeline I would create a job in Jenkins where on commit it would trigger all checks and steps until Terraform Apply and would trigger a status to slack or email where we can check the status of the deployment and the logs
 
-![Untitled Diagram](https://github.com/user-attachments/assets/dc9dbf0f-5024-4c76-9271-5524c20c108d)
+![Untitled Diagram (1)](https://github.com/user-attachments/assets/780b9ef3-3db4-4421-b9ad-add9d6dc13a4)
 
 ## Git Commit:
 
