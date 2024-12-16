@@ -209,3 +209,25 @@ resource "aws_ecs_task_definition" "app_task" {
   ])
 }
 ```
+For the pipeline I would create a job in Jenkins where on commit it would trigger all checks and steps until Terraform Apply and would trigger a status to slack or email where we can check the status of the deployment and the logs
+
+![Untitled Diagram](https://github.com/user-attachments/assets/dc9dbf0f-5024-4c76-9271-5524c20c108d)
+
+## Git Commit:
+
+A developer pushes changes to a repository containing Terraform code (e.g., .tf files).
+This commit acts as the trigger for the pipeline.
+
+ ## Jenkins Job:
+
+terraform init: Initialize Terraform working directory.
+terraform validate: Validate the syntax and structure of Terraform code.
+terraform plan: Show the resources that will be created, changed, or destroyed.
+terraform apply: Apply the changes to provision the infrastructure.
+Terraform Apply Successful:
+
+If the terraform apply step completes successfully, resources are created or modified in AWS.
+
+## Slack or Email Notification:
+
+Notifications are sent to inform about the success of the Terraform job.
