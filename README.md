@@ -128,33 +128,33 @@ The following are two snippets of how with reacher I would approch the first ste
 
 variables.tf
 ```hcl
-# Variable for VPC CIDR Block
+
 variable "vpc_cidr_block" {
   description = "The CIDR block for the VPC"
   type        = string
   default     = "10.0.0.0/16" # You can override this in *.tfvars files
 }
 
-# Variable for Environment Name
+
 variable "environment" {
   description = "The deployment environment (e.g., dev, staging, prod)"
   type        = string
 }
 
-# Variable for ECS Cluster Name
+
 variable "ecs_cluster_name" {
   description = "The name of the ECS cluster"
   type        = string
 }
 
-# Variable for Desired Task Count
+
 variable "task_count" {
   description = "The number of tasks to run in the ECS service"
   type        = number
   default     = 2
 }
 
-# Variable for Container Image
+
 variable "container_image" {
   description = "The container image to use in the ECS task definition"
   type        = string
@@ -163,7 +163,7 @@ variable "container_image" {
 
 main.tf
 ```hcl
-# Define a VPC
+### VPC
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr_block
 
@@ -172,12 +172,12 @@ resource "aws_vpc" "main" {
   }
 }
 
-# Create an ECS Cluster
+#### ECS Cluster
 resource "aws_ecs_cluster" "ecs_cluster" {
   name = var.ecs_cluster_name
 }
 
-# Deploy ECS Fargate Service
+### ECS Fargate Service
 resource "aws_ecs_service" "app_service" {
   name            = "app-service-${var.environment}"
   cluster         = aws_ecs_cluster.ecs_cluster.id
@@ -187,7 +187,7 @@ resource "aws_ecs_service" "app_service" {
   task_definition = aws_ecs_task_definition.app_task.arn
 }
 
-# Define ECS Task Definition
+### ECS Task 
 resource "aws_ecs_task_definition" "app_task" {
   family                   = "app-task-${var.environment}"
   network_mode             = "awsvpc"
