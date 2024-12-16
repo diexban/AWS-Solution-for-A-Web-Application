@@ -120,4 +120,55 @@ While CloudFront provides significant performance and security benefits by cachi
 This trade-off is suitable for applications where latency and geographic distribution of users are not critical factors.
 
 ## Task #2
-For task number two I could convert my structure into terraform code and store it in a github repository
+For task number two I could convert my structure into terraform code and store it in a github repository, I could create a variables.tf file with environment-specific and client specific .tfvars files so we can use resuse the main.tf file in different situations this would solve any reusability issues that would arrise, I would also structure my project with modules to avoid any unesecary duplication.
+
+## Infrastructure as Code with Terraform
+
+The following Terraform code defines a VPC, ECS Cluster, ECS Fargate Service, and Task Definition.
+
+```hcl
+# Define a VPC
+resource "aws_vpc" "main" {
+  cidr_block = var.vpc_cidr_block
+
+  tags = {
+    Name = "VPC-${var.environment}"
+  }
+}
+
+# Create an ECS Cluster
+resource "aws_ecs_cluster" "ecs_cluster" {
+  name = var.ecs_cluster_name
+}
+
+# Deploy ECS Fargate Service
+resource "aws_ecs_service" "app_service" {
+  name            = "app-service-${var.environment}"
+  cluster         = aws_ecs_cluster.ecs_cluster.id
+  launch_type     = "FARGATE"
+  desired_count   = var.task_count
+
+  task_definition = aws_ecs_task_definition.app_task.arn
+}
+
+# Define ECS Task Definition
+resource "aws_ecs_task_definition" "app_task" {
+  family                   = "app-task-${var.environment}"
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = "512"
+  memory                   = "1024"
+
+  container_definitions = jsonencode([
+    {
+      name  = "app-container"
+      image = var.container_image
+      portMappings = [
+        {
+          containerPort = 80
+          hostPort      = 80
+        }
+      ]
+    }
+  ])
+}
