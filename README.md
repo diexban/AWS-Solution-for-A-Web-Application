@@ -28,6 +28,7 @@ For content distribution, I use CloudFront to accelerate delivery and cache stat
 
 In terms of monitoring, I configured CloudWatch to monitor the health of each component and CloudTrail to track any significant changes made to the environment, helping with auditing and troubleshooting.
 
+
 ### 1. Networking Layer
 - **AWS Region**
 - **Virtual Private Cloud (VPC)**
@@ -58,9 +59,12 @@ In terms of monitoring, I configured CloudWatch to monitor the health of each co
 
 ### 7. Monitoring and Security
 - **AWS CloudWatch** (for monitoring and logging)
-- **AWS CloudTrail** (for auditing and tracking API calls)
+- **AWS CloudTrail** (for auditing )
 - **AWS IAM** (Identity and Access Management for security control)
 
 ### 8. Deployment & Container Registry
 - **Amazon Elastic Container Registry (ECR)** (for container image storage)
-- **Developer Pipeline** (to automate the creation of the images and the upload to ECR)
+
+##  Discussion
+
+
