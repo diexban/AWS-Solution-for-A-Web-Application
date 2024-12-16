@@ -118,3 +118,6 @@ Removed CloudFront for Cost Optimization
  - To reduce costs, I removed Amazon CloudFront as a content distribution layer.
 While CloudFront provides significant performance and security benefits by caching content at edge locations, the architecture now routes requests directly to the load balancer. This approach simplifies the architecture and avoids the additional costs associated with maintaining a CDN.
 This trade-off is suitable for applications where latency and geographic distribution of users are not critical factors.
+
+## Task #2
+For task number two I could convert my structure into terraform code and store it in a github repository
