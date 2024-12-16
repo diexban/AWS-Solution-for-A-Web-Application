@@ -30,7 +30,7 @@ In terms of monitoring, I configured CloudWatch to monitor the health of each co
 
 
 ### 1. Networking Layer
-- **AWS Region**
+- **AWS Region**  
 - **Virtual Private Cloud (VPC)**
 - **Public Subnet** (used for Application Load Balancer)
 - **Private Subnets**
@@ -67,4 +67,28 @@ In terms of monitoring, I configured CloudWatch to monitor the health of each co
 
 ##  Discussion
 
+■ How does each choice contribute to cost-effectiveness against high
+availability?
+- A key point in my first solution that contributes to cost-effectiveness is the use of Fargate. As a managed service, Fargate automatically scales based on demand, ensuring that the system performs well under varying loads without the need to over-provision resources. This approach is more cost-effective than using EC2 instances, where over-provisioning could lead to unnecessary expenses.
 
+- Another important decision was to use RDS with synchronous replication. While having a replica in a second availability zone is cheaper than using two separate RDS instances for high availability, opting for a single RDS instance without a replica could save costs further. However, this would compromise high availability and fault tolerance. The additional cost of a replica is justified to reduce the risk of downtime, which could lead to greater losses.
+
+- While using CloudFront adds some cost, it provides significant performance benefits by reducing strain on the web layer. With caching in place, the web layer does not need to scale as frequently, keeping costs lower overall. Similarly, using Redis adds costs for the caching layer but significantly reduces load on the database, helping maintain performance at scale.
+
+■ What trade-offs, if any, did you make between cost and
+performance?
+
+- I opted for synchronous replication in RDS to ensure high availability, even though this incurs additional cost. The alternative of using a single-instance RDS would reduce costs but compromise the application's resilience, which could lead to greater losses in case of downtime.
+
+- Using CloudFront and Redis incurs some additional cost, but the trade-off is worth it for the significant improvements in performance and scalability. This reduces the load on the web layer and the database, ensuring that both components are more efficient and perform well under varying traffic.
+
+■ Discuss any cost implications of your scaling policies and how they
+adapt to varying traffic loads.
+
+While I can't provide precise figures without knowing the exact traffic patterns, I would implement the following scaling policies to keep costs under control:
+
+- Target Tracking Scaling: This policy will automatically adjust the number of tasks for computing instances (Fargate) based on usage. By scaling the application dynamically according to traffic, we avoid over-provisioning, which helps keep costs low.
+
+- Log Retention Policy in CloudWatch: To further reduce costs, I would apply a short log retention policy in CloudWatch. Logs would be transferred to S3 with its own retention policy, ensuring that unnecessary data is not stored for long periods, reducing storage costs.
+
+- Reserved Instances for RDS: To manage database costs effectively while ensuring high availability, I would purchase Reserved Instances for RDS. This would give us predictable pricing and lower costs over time, while still allowing us to handle variable traffic loads efficiently.
