@@ -126,7 +126,7 @@ As an extra to task #1 and beacuse we don't know how crucial uptime is with the 
 Image reference: [AWS Blog](https://aws.amazon.com/blogs/architecture/disaster-recovery-dr-architecture-on-aws-part-iii-pilot-light-and-warm-standby/).
 
 ## Task #2
-For task number two, I could convert my structure into Terraform code and store it in a GitHub repository. I could create a variables.tf file with environment-specific and client-specific .tfvars files so we can reuse the main.tf file in different situations. This would solve any reusability issues that might arise. I would also structure my project with modules to avoid any unnecessary duplication.
+For task number two, I would convert my structure into Terraform code and store it in a GitHub repository. I could create a variables.tf file with environment-specific and client-specific .tfvars files so we can reuse the main.tf file in different situations. This would solve any reusability issues that might arise. I would also structure my project with modules to avoid any unnecessary duplication.
 
 ## Infrastructure as Code with Terraform
 
