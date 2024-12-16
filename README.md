@@ -22,7 +22,7 @@ In each Availability Zone, I deployed Fargate instances running both front-end a
 
 To handle load distribution between the web and app layers, I set up an internal load balancer that balances traffic between the web layer and the app layer. Each Fargate instance is placed inside its own security group, allowing communication only between layers and the necessary services. This separation minimizes the risk of security breaches.
 
-For the database layer, I have set up an RDS instance with synchronous replication in the second Availability Zone, which ensures failover capabilities in case of an issue. This database is also placed inside its own security group for added security. I opted for a single RDS instance, as it has sufficient capacity to scale on its own. Additionally, I added two ElastiCache Redis node to offload some of the load from the database using caching. These nodes have a separate Security Group as well
+For the database layer, I have set up an RDS instance with synchronous replication in the second Availability Zone, which ensures failover capabilities in case of an issue. This database is also placed inside its own security group for added security. I opted for a single RDS instance, Additionally, I added two ElastiCache Redis node to offload some of the load from the database using caching. These nodes have a separate Security Group as well
 
 For content distribution, I use CloudFront to accelerate delivery and cache static content. CloudFront is connected to an Application Load Balancer in a public subnet of my VPC, which balances traffic to the web layer. For storage, I leverage S3 to serve static content, store backups, and store logs.
 
@@ -73,6 +73,8 @@ availability?
 
 - Another important decision I made was to use RDS with synchronous replication. While having a replica in a second availability zone is cheaper than using two separate RDS instances for high availability, opting for a single RDS instance without a replica could save costs further. However, this would compromise high availability and fault tolerance. The additional cost of a replica I believe is justified to reduce the risk of downtime, which could lead to greater losses.
 
+- I also opted on having two separete clusters so we can optimize resource allocation for each layer meaning if the web layer needs to scale independently of the app layer we would be able to do this. This could introduce indirect costs due to the increased complexity but in the long run it's better to have the layers as independent clusters
+
 - Lastly while using CloudFront adds some cost, it provides significant performance benefits by reducing strain on the web layer. With caching in place, the web layer does not need to scale as frequently, keeping costs lower overall. Similarly, using Redis adds costs for the caching layer but significantly reduces load on the database, helping maintain performance at scale.
 
 ■ What trade-offs, if any, did you make between cost and
@@ -85,10 +87,10 @@ performance?
 ■ Discuss any cost implications of your scaling policies and how they
 adapt to varying traffic loads.
 
-While I can't provide precise figures without knowing the exact traffic patterns, I would implement the following scaling policies to keep costs under control:
+While I can't really provide precise cost without knowing the exact traffic patterns, I would implement the following scaling policies to keep costs under control:
 
-- Target Tracking Scaling: This policy will automatically adjust the number of tasks for computing instances based on usage. By scaling the application dynamically according to traffic, we avoid over-provisioning, which helps keep costs low.
+- A Target Tracking Scaling: This policy will automatically adjust the number of tasks for computing instances based on usage. By scaling the application dynamically according to traffic, we avoid over-provisioning, which helps keep costs low.
 
-- Log Retention Policy in CloudWatch: To further reduce costs, I would apply a short log retention policy in CloudWatch. Logs would be transferred to S3 with its own retention policy, ensuring that unnecessary data is not stored for long periods, reducing storage costs.
+- A Log Retention Policy in CloudWatch: To further reduce costs, I would apply a short log retention policy in CloudWatch. Logs would be transferred to S3 with its own retention policy, ensuring that unnecessary data is not stored for long periods, reducing storage costs.
 
-- Reserved Instances for RDS: To manage database costs effectively while ensuring high availability, I would purchase Reserved Instances for RDS. This would give us predictable pricing and lower costs over time, while still allowing us to handle variable traffic loads efficiently.
+- Reserved Instances for RDS: To manage database costs effectively while ensuring high availability, I would purchase Reserved Instances for RDS as possible. This would give us predictable pricing and lower costs over time, while still allowing us to handle variable traffic loads efficiently.
