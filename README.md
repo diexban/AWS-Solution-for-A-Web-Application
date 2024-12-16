@@ -207,8 +207,8 @@ resource "aws_ecs_task_definition" "app_task" {
       image = var.container_image
       portMappings = [
         {
-          containerPort = 80
-          hostPort      = 80
+          containerPort = 6020
+          hostPort      = 2060
         }
       ]
     }
