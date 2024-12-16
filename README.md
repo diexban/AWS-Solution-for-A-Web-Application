@@ -124,8 +124,44 @@ For task number two I could convert my structure into terraform code and store i
 
 ## Infrastructure as Code with Terraform
 
-The following Terraform code defines a VPC, ECS Cluster, ECS Fargate Service, and Task Definition.
+The following are two snippets of how with reacher I would approch the first steps of the turning the design into IaC
 
+variables.tf
+```hcl
+# Variable for VPC CIDR Block
+variable "vpc_cidr_block" {
+  description = "The CIDR block for the VPC"
+  type        = string
+  default     = "10.0.0.0/16" # You can override this in *.tfvars files
+}
+
+# Variable for Environment Name
+variable "environment" {
+  description = "The deployment environment (e.g., dev, staging, prod)"
+  type        = string
+}
+
+# Variable for ECS Cluster Name
+variable "ecs_cluster_name" {
+  description = "The name of the ECS cluster"
+  type        = string
+}
+
+# Variable for Desired Task Count
+variable "task_count" {
+  description = "The number of tasks to run in the ECS service"
+  type        = number
+  default     = 2
+}
+
+# Variable for Container Image
+variable "container_image" {
+  description = "The container image to use in the ECS task definition"
+  type        = string
+}
+```
+
+main.tf
 ```hcl
 # Define a VPC
 resource "aws_vpc" "main" {
@@ -172,3 +208,4 @@ resource "aws_ecs_task_definition" "app_task" {
     }
   ])
 }
+
