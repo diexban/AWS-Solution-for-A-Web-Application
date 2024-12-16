@@ -40,7 +40,7 @@ In terms of monitoring, I configured CloudWatch to monitor the health of each co
 - **Security Groups**
 
 ### 2. Compute Layer
-- **Amazon ECS Cluster 1 in each layer**
+- **Amazon ECS Cluster in the web and app layer**
 - **AWS Fargate** (used in both Web Layer and App Layer)
 
 ### 3. Load Balancing
@@ -90,11 +90,11 @@ adapt to varying traffic loads.
 
 While I can't really provide precise cost without knowing the exact traffic patterns, I would implement the following scaling policies to keep costs under control:
 
-- A Target Tracking Scaling: This policy will automatically adjust the number of tasks for computing instances based on usage. By scaling the application dynamically according to traffic, we avoid over-provisioning, which helps keep costs low.
+- A Target Tracking Scaling: This policy will automatically adjust the number of tasks for computing instances based on usage. By scaling the application dynamically according to traffic, we can avoid over-provisioning, which helps keep costs low.
 
 - A Log Retention Policy in CloudWatch: To further reduce costs, I would apply a short log retention policy in CloudWatch. Logs would be transferred to S3 with its own retention policy, ensuring that unnecessary data is not stored for long periods, reducing storage costs.
 
-- Reserved Instances for RDS: To manage database costs effectively while ensuring high availability, I would purchase Reserved Instances for RDS as possible. This would give us predictable pricing and lower costs over time, while still allowing us to handle variable traffic loads efficiently.
+- Reserved Instances for RDS: To manage database costs effectively while ensuring high availability, I would purchase Reserved Instances for RDS as possible. This would give us predictable pricing and lower costs over time, while still allowing us to handle variable traffic loads.
 
 - For S3 buckets I would apply a retention policy to keep cost low and change the storage tier to the one really needed
    
@@ -108,16 +108,15 @@ For my second solution, I implemented a more traditional 3-tier architecture usi
 - Instead of using AWS Fargate to run the application, I opted for EC2 instances.
 These instances are placed inside an Auto Scaling Group (ASG) to ensure scalability. The ASG automatically adjusts the number of instances based on traffic or application demands, adding new instances during peak times and reducing them during low-traffic periods.
 This approach gives greater control over the compute layer, especially if the application requires custom configurations or additional resources that are easier to manage with EC2 instances.
-Replaced RDS with AuroraDB
+
 
 - To streamline database management and benefit from automatic scaling, I replaced the Amazon RDS instance with Amazon Aurora.
-Aurora provides advanced features such as automatic replication, high availability, and dynamic scaling, which can handle varying workloads more efficiently than traditional RDS.
-This change not only simplifies database maintenance but also reduces costs by scaling storage and compute independently as needed.
-Removed CloudFront for Cost Optimization
+Aurora provides features such as automatic replication, high availability, and dynamic scaling, which can handle varying workloads more efficiently than traditional RDS.
+This change simplifies database maintenance but also reduces costs by scaling storage and compute independently as needed.
 
  - To reduce costs, I removed Amazon CloudFront as a content distribution layer.
-While CloudFront provides significant performance and security benefits by caching content at edge locations, the architecture now routes requests directly to the load balancer. This approach simplifies the architecture and avoids the additional costs associated with maintaining a CDN.
-This trade-off is suitable for applications where latency and geographic distribution of users are not critical factors.
+While it provides significant performance and security benefits by caching content at edge locations, the architecture now routes requests directly to the load balancer. This approach simplifies the architecture and avoids the additional costs associated with maintaining a CDN.
+
 
 ## Task #2
 For task number two, I could convert my structure into Terraform code and store it in a GitHub repository. I could create a variables.tf file with environment-specific and client-specific .tfvars files so we can reuse the main.tf file in different situations. This would solve any reusability issues that might arise. I would also structure my project with modules to avoid any unnecessary duplication.
