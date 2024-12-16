@@ -103,8 +103,6 @@ While I can't really provide precise cost without knowing the exact traffic patt
 
 ## Explanation and Components Used in Solution #2
 
-Switched from Fargate to EC2 Instances
-
 For my second solution, I implemented a more traditional 3-tier architecture using EC2 instances as the core compute layer. Rather than detailing all the components in the design, I'll focus on the key differences compared to the original setup:
 
 - Instead of using AWS Fargate to run the application, I opted for EC2 instances.
