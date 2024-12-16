@@ -121,6 +121,13 @@ While it provides significant performance and security benefits by caching conte
 ## Task #2
 For task number two, I could convert my structure into Terraform code and store it in a GitHub repository. I could create a variables.tf file with environment-specific and client-specific .tfvars files so we can reuse the main.tf file in different situations. This would solve any reusability issues that might arise. I would also structure my project with modules to avoid any unnecessary duplication.
 
+## Extra Disaster Recovery Stragedy
+<img width="581" alt="image" src="https://github.com/user-attachments/assets/c7a46929-82d3-44ed-8fdf-8c032bf1e9e9" />
+
+This disaster recovery I would recomment if uptime is very crucial for this app while a region failure is very rare, it’s still important to have a solid disaster recovery plan. I’d go with a Pilot Light approach, which works well with either of my solutions. This means replicating the infrastructure in another AWS region but keeping it running with minimal resources—just enough to stay functional. If something goes wrong in the primary region, I can quickly fail over to the backup region, spin up the needed resources, and get everything back online. Once the issue is resolved, I can clean up any unnecessary resources. It’s a cost-effective way to stay prepared without running a full-scale duplicate environment all the time.
+
+Image reference: [AWS Blog](https://aws.amazon.com/blogs/architecture/disaster-recovery-dr-architecture-on-aws-part-iii-pilot-light-and-warm-standby/).
+
 ## Infrastructure as Code with Terraform
 
 The following are two snippets of how I would approach the first steps of turning the design into IaC.
