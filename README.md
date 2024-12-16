@@ -130,20 +130,20 @@ variables.tf
 ```hcl
 
 variable "vpc_cidr_block" {
-  description = "The CIDR block for the VPC"
+  description = "CIDR block"
   type        = string
-  default     = "10.0.0.0/16" # You can override this in *.tfvars files
+  default     = 
 }
 
 
 variable "environment" {
-  description = "The deployment environment (e.g., dev, staging, prod)"
+  description = "The deployment environment)"
   type        = string
 }
 
 
 variable "ecs_cluster_name" {
-  description = "The name of the ECS cluster"
+  description = "ECS cluster"
   type        = string
 }
 
@@ -156,7 +156,7 @@ variable "task_count" {
 
 
 variable "container_image" {
-  description = "The container image to use in the ECS task definition"
+  description = "The container image"
   type        = string
 }
 ```
