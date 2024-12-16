@@ -94,3 +94,9 @@ While I can't really provide precise cost without knowing the exact traffic patt
 - A Log Retention Policy in CloudWatch: To further reduce costs, I would apply a short log retention policy in CloudWatch. Logs would be transferred to S3 with its own retention policy, ensuring that unnecessary data is not stored for long periods, reducing storage costs.
 
 - Reserved Instances for RDS: To manage database costs effectively while ensuring high availability, I would purchase Reserved Instances for RDS as possible. This would give us predictable pricing and lower costs over time, while still allowing us to handle variable traffic loads efficiently.
+
+- For S3 buckets I would apply a retention policy to keep cost low and change the storage tier to the one really needed
+   
+## Solution #2
+![AWS Solution Fargate (3)](https://github.com/user-attachments/assets/c472edbd-690a-436c-9441-d91506746eae)
+
