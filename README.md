@@ -101,3 +101,7 @@ While I can't really provide precise cost without knowing the exact traffic patt
 ## Solution #2
 ![AWS Solution Fargate (3)](https://github.com/user-attachments/assets/c472edbd-690a-436c-9441-d91506746eae)
 
+## Explanation and Components Used in Solution #2
+
+For my second solution I followed a more traditional 3 tier arquiteqtual design using EC2 instances, rather than pointing out all the components I'll point out what is different
+I exchanged fargate for EC2 servers in case the application needs them they are placed inside a auto scaling group to 
