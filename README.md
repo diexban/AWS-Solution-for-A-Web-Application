@@ -213,18 +213,18 @@ For the pipeline I would create a job in Jenkins where on commit it would trigge
 
 ![Untitled Diagram (1)](https://github.com/user-attachments/assets/780b9ef3-3db4-4421-b9ad-add9d6dc13a4)
 
-## Git Commit:
+# Git Commit:
 
-A developer pushes changes to a repository containing Terraform code (e.g., .tf files).
+developer pushes changes to a repository containing Terraform code 
 This commit acts as the trigger for the pipeline.
 
- ## Jenkins Job:
+ # Jenkins Job:
 
-terraform init: Initialize Terraform working directory.
-terraform validate: Validate the syntax and structure of Terraform code.
-terraform plan: Show the resources that will be created, changed, or destroyed.
-terraform apply: Apply the changes to provision the infrastructure.
-Terraform Apply Successful:
+- terraform init: Initialize Terraform working directory.
+- terraform validate: Validate the syntax and structure of Terraform code.
+- terraform plan: Show the resources that will be created, changed, or destroyed.
+- terraform apply: Apply the changes to provision the infrastructure.
+- Terraform Apply Successful:
 
 If the terraform apply step completes successfully, resources are created or modified in AWS.
 
