@@ -1,13 +1,11 @@
-# AWS-Solution-For-A-Web-Application
+# AWS Solution For A Web Application
 
-In this excercise I am going to explain the design solution that I would give to the following prompt problem:
-"You are part of a DevOps team tasked with designing the infrastructure
-for a new web application hosted on AWS. The application must be scalable, secure,
-highly available and cost-effective. It consists of a couple of front-end services, some
-back-end services, a MySQL database, load balancers, redis, and monitoring services."
+## Infrastructure Design Proposal for AWS Web Application Hosting
 
-For this excersise I've decided to implement a Three-tier architecture solution with Pilot Light Disaster stragedy
+As part of the infrastructure design for the new web application, I am proposing **two solutions** for hosting the application on AWS. Since it is not yet confirmed whether the application will be built using container images, the two solutions address both possibilities:
 
-# AWS Components Implemented:
+1. **Using AWS Fargate**  
+   _(For container-based workloads)_  
 
-# Tools and Resources:
+2. **Using EC2 Instances**  
+   _(For traditional virtual machines)_  
