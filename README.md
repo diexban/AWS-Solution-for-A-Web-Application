@@ -226,7 +226,7 @@ This commit acts as the trigger for the pipeline.
 - terraform apply: Apply the changes to provision the infrastructure.
 - Terraform Apply Successful:
 
-If the terraform apply step completes successfully, resources are created or modified in AWS.
+If the terraform apply step completes successfully then resources are created or modified in AWS.
 
 ### Slack or Email Notification:
 
